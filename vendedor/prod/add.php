@@ -8,7 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!$nome_prod) {
         $erro = "Nome Vazio!";
     } elseif (!$preco) {
-        $erro = "Nome Vazio!";
+        $erro = "Preço Vazio!";
+    } elseif (!$id_cat) {
+        $erro = "Categoria Vazia!";
     } else {
         $link = mysqli_connect("localhost", "root", "", "sistema");
         $sql = "INSERT INTO prod(nome_prod, preco, id_cat) VALUES ('" . $nome_prod . "','" . $preco . "','" . $id_cat . "')";
@@ -45,11 +47,13 @@ $result_cat = mysqli_query($link_cat, $sql_cat);
             <td><input type="text" name="preco" value="<?=isset($preco)?$preco:""; ?>"></td>
             <td><label for="categoria" name="id_cat"<?=isset($id_cat)?$id_cat:""; ?>></label>
                 <select name="id_cat" id="id_cat">
+                    <option value="">Selecione uma categoria...</option>
                     <?php 
                     while ($row = mysqli_fetch_assoc($result_cat)){
                     ?>
                     <option value="<?=$row["id_cat"];?>">
-                        <?=$row["nome_cat"];?>
+                        
+                        <?= $row["nome_cat"];?>
                     </option>
                     <?php 
                     }
